@@ -10,7 +10,7 @@ import LogoDiscord from '../assets/logo_discord.png'
 import LogoShip from '../assets/logo_ship.png'
 import ArrowDown from '../assets/icon_down.png'
 import localFont from '@next/font/local'
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 const myFont = localFont({ src: '../assets/Aurebesh-English.ttf' })
 
@@ -25,13 +25,24 @@ export default function Home() {
 
     if (videoRef && videoRef.current) {
       videoRef.current.muted = false
-      videoRef.current.play();
+      // videoRef.current.play();
     }
   }
+  let [muted,setMuted] = useState(true)
+  useEffect(() => {
+    
+    if(!muted){return}
+   
+      window.addEventListener('scroll', ()=>{
+        loadingVideo()
+      });
+     
+    
+  })
   return (
 
 
-    <main >
+    <main  onClick={loadingVideo}>
       <>
         <div className="relative h-screen overflow-hidden" ref={target}>
           <div className="custom-bg z-0 absolute pointer-events-none h-screen w-screen">
@@ -40,13 +51,13 @@ export default function Home() {
                 src="/2ndc.mp4"
                 className=' w-screen'
                 //  onLoad={loadingVideo} 
-                onLoad={() => loadingVideo}
+                // onLoad={() => loadingVideo}
                 loop={false}
                 controls={false}
                 preload="auto"
                 autoPlay={true}
                 muted
-
+                ref={videoRef}
               ></video>
             </Parallax>
             {/* <img src="http://www.fillmurray.com/500/320" alt="fill murray" /> */}
@@ -73,7 +84,7 @@ export default function Home() {
                   <h6>Phase 0</h6>
                   <div>
                     <h3 className='text-3xl pb-4'>专注挖掘Alpha机会</h3>
-                    <p className='text-lg'>写给散户看的投研报告 + 详细可执行的S</p>
+                    <p className='text-lg'>写给散户看的投研报告 + 详细可执行的SOP指引  持续跟踪更新项目动态</p>
                   </div>
                   <h5 className={myFont.className}>monolith</h5>
                 </div>
@@ -97,8 +108,8 @@ export default function Home() {
         </div>
         <div className="relative h-screen overflow-hidden">
 
-          <div className='flex flex-col h-screen'>
-            <div className='flex w-full flex-grow justify-between items-center text-yellow '>
+          <div className='flex flex-col h-screen text-yellow '>
+            <div className='flex w-full flex-grow justify-between items-center'>
               <div className='left_box px-10 py-6 h-full'>
 
                 <h6>Phase 0</h6>

@@ -13,7 +13,10 @@ module.exports = {
   theme: {
     colors: {
       'yellow': '#FF8002',
-      'gold':'#8D4200'
+      'gold':'#8D4200',
+      'white': '#FFFFFF',
+      'black': '#000000',
+      'red':'rgb(181, 23, 0)',
     },
   },
   plugins: [

@@ -4,10 +4,10 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-      <link
+      {/* <link
           href="https://fonts.googleapis.com/css2?family=Michroma&family=Montserrat:wght@300&display=swap"
           rel="stylesheet"
-        />
+        /> */}
       </Head>
       <body>
         <Main />

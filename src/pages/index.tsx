@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import Header from '../components/Header'
 import { useTranslation } from "react-i18next";
+import router from 'next/router';
 
 const myFont = localFont({ src: '../assets/BlockZone.ttf' })
 let renderer: THREE.WebGLRenderer,
@@ -147,8 +148,8 @@ export default function Home() {
             <h2>{t('index_desc')}</h2>
             <h2>{t('index_desc_1')}</h2>
 
-            <button className="py-2 bg-white px-8 mt-2 text-black rounded-full">
-              <p>{t('join_btn')}</p>
+            <button className="py-2 bg-white px-8 mt-6 text-black rounded-full">
+              <a className='hover:text-red'   onClick={() => router.push('/passport')}>{t('join_btn')}</a>
             </button>
 
           </div>

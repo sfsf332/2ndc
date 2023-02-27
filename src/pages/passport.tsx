@@ -30,7 +30,7 @@ export default function Ticket() {
                                             </ul>
                                             <p className='flex justify-between mt-8'>
                                                 <span className='text-sm'>- {t('label_progress')}</span>
-                                                <span>222/321</span>
+                                                <span>{item>1?'Checking':'222/321'}</span>
                                             </p>
                                             <button className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full">
                                                 <span className='text-red mr-2'>-</span><span>0.4 E</span><span className='text-red  ml-2'>  -</span>

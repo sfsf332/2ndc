@@ -5,6 +5,7 @@ import localFont from '@next/font/local'
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import Header from '../components/Header'
+import { useTranslation } from "react-i18next";
 
 const myFont = localFont({ src: '../assets/BlockZone.ttf' })
 let renderer: THREE.WebGLRenderer,
@@ -13,16 +14,9 @@ let renderer: THREE.WebGLRenderer,
   circle: THREE.Object3D<THREE.Event>,
   skelet: THREE.Object3D<THREE.Event>,
   particle: THREE.Object3D<THREE.Event>;
-const textInit = [
-  'All For Retail Investors',
-  'We Offer',
-  'Reports / HOW-TO SOPs / TeamWorks / Hack tools',
-  '╳┍┒╼╾┖┙╳',
-  'Always believe that quality is more important than quantit',
-  'This could be the highest ROI you will ever get in the crypto world'
-]
+
 export default function Home() {
-  const [htmlText, setHtmlText] = useState(textInit)
+  const { t } = useTranslation();
 
   const canvasInit = () => {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
@@ -56,7 +50,6 @@ export default function Home() {
     var geom = new THREE.IcosahedronGeometry(4, 8);
     // const geom = new THREE.BoxGeometry(8, 8, 8);
 
-    var geom2 = new THREE.IcosahedronGeometry(15, 1);
 
     var material = new THREE.MeshPhongMaterial({
       color: 0xffffff,
@@ -117,7 +110,7 @@ export default function Home() {
 
   const canvasAnimate = () => {
     requestAnimationFrame(canvasAnimate);
-
+   
     particle.rotation.x += 0.0000;
     particle.rotation.y -= 0.0040;
     circle.rotation.x -= 0.0000;
@@ -125,6 +118,7 @@ export default function Home() {
     skelet.rotation.x -= 0.0010;
     skelet.rotation.y += 0.0020;
     renderer.clear();
+    
 
     renderer.render(scene, camera)
   };
@@ -137,38 +131,31 @@ export default function Home() {
     // Call handler right away so state gets updated with initial window size
     handleResize();
     // Remove event listener on cleanup
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize)
+    }
   }, [])
   return (
-
-
-    <main className={myFont.className + ' w-full h-[100vh] flex flex-col bg-[#000] overflow-hidden text-white '}>
-      <div className='py-2'>
-        <Header />
-      </div>
-      <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  relative">
-        <div className=' w-full absolute top-0 left-0 min-h-screen z-999'>
-          <div className="w-[1280px] h-full mx-auto mt-[8%]">
+    <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  relative">
+      <div className=' w-full absolute top-0 left-0 min-h-screen z-999'>
+        <div className="w-[1280px] h-full mx-auto mt-[8%]">
           <div className=" w-[480px] mx-0 bg-[rgba(21,21,21,1)]  md:py-10  md:px-10 rounded-2xl  text-base ">
-            <h1>{htmlText[0]}</h1>
-            <h2>{htmlText[1]}</h2>
-            <h3>{htmlText[2]}</h3>
-            <h1 className="py-4 text-red">╼╾╼╾{htmlText[3]}╼╾╼╾</h1>
-            <h2>{htmlText[4]}</h2>
-            <h2>{htmlText[5]}</h2>
+            <h1>{t('index_title')}</h1>
+            <h1>{t('index_subtitle')}</h1>
+            <h3>{t('index_intro')}</h3>
+            <h1 className="py-4 text-red">{t('index_line')}</h1>
+            <h2>{t('index_desc')}</h2>
+            <h2>{t('index_desc_1')}</h2>
 
             <button className="py-2 bg-white px-8 mt-2 text-black rounded-full">
-              <p>Join in</p>
+              <p>{t('join_btn')}</p>
             </button>
 
           </div>
-          </div>
         </div>
-        <div className=" w-full absolute z-0 top-0 left-0 h-full pointer-events-none" id="canvas"></div>
-
       </div>
-    </main>
-
+      <div className=" w-full absolute z-0 top-0 left-0 h-full pointer-events-none" id="canvas"></div>
+    </div>
   )
 }
 

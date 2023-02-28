@@ -8,7 +8,8 @@
     "index_intro": "投研报告 / 操作SOP / 组队作战 / 科学家⼯具",
     "index_line": "╼╾╼╾╳┍┒╼╾┖┙╳╼╾╼╾",
     "index_desc": "要相信,质量远胜过于数量",
-    "index_desc_1": "这可能是你在区块链世界⾥回报率最⾼的⼀次投资",
+    "index_desc_1": "这可能是你在区块链世界⾥",
+    "index_desc_2": "回报率最⾼的⼀次投资",
     "join_btn": "加⼊会员",
     "passport_title": "欢迎登舰，舰⻓。",
     "passport_subtitle": " ⼆等舱已经准备好，请选择你要铸造的⻔票。",
@@ -33,5 +34,7 @@
     "label_checking":"检票中",
     "social_title":"我们即将启程回家。",
     "social_intro":"加⼊我们的社交平台，⼀个点击，⽴即暴富。",
-    "social_intro1":"你应该先加⼊Discord。"
+    "social_intro1":"你应该先加⼊Discord。",
+    "label_freemint":"免费铸造"
+    
 }

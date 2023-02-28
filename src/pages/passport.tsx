@@ -5,7 +5,16 @@ import { useTranslation } from 'react-i18next';
 export default function Ticket() {
     const { t, i18n } = useTranslation();
 
-
+    const switchPrice = (index: number) => {
+        switch (index) {
+            case 1:
+                return '0.4 E'
+            case 2:
+                return '0.25 E'
+            case 3:
+                return t('label_freemint')
+        }
+    }
     return (
         
             <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  ">
@@ -33,7 +42,12 @@ export default function Ticket() {
                                                 <span>{item>1?'Checking':'222/321'}</span>
                                             </p>
                                             <button className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full">
-                                                <span className='text-red mr-2'>-</span><span>0.4 E</span><span className='text-red  ml-2'>  -</span>
+                                                <span className='text-red mr-2'>-</span>
+                                              
+                                                <span>
+                                                    {switchPrice(item)}
+                                                </span>
+                                                <span className='text-red  ml-2'>  -</span>
                                             </button>
                                         </div>
 

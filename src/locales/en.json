@@ -8,7 +8,8 @@
     "index_intro": "Reports / HOW-TO SOPs / TeamWorks / Hack tools",
     "index_line": "╼╾╼╾╳┍┒╼╾┖┙╳╼╾╼╾",
     "index_desc": "Always believe that quality is more important than quantity",
-    "index_desc_1": "This could be the highest ROI you will ever get in the crypto world",
+    "index_desc_1": "This could be the highest ROI",
+    "index_desc_2": "You will ever get in the crypto world",
     "join_btn": "Join in",
     "passport_title": "Welcome abord, ser.",
     "passport_subtitle": "Chose your ticket to on board. 2ndc is ready for you.",
@@ -33,5 +34,7 @@
     "label_checking":"Checking",
     "social_title":"We're coming home now",
     "social_intro":"join our club to get rich as you wish just with one click.",
-    "social_intro1":"You may join discord first."
+    "social_intro1":"You may join discord first.",
+    "label_freemint":"Free Mint"
+
 }

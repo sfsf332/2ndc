@@ -147,6 +147,7 @@ export default function Home() {
             <h1 className="py-4 text-red">{t('index_line')}</h1>
             <h2>{t('index_desc')}</h2>
             <h2>{t('index_desc_1')}</h2>
+            <h2>{t('index_desc_2')}</h2>
 
             <button className="py-2 bg-white px-8 mt-6 text-black rounded-full">
               <a className='hover:text-red'   onClick={() => router.push('/passport')}>{t('join_btn')}</a>

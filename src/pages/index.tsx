@@ -17,6 +17,8 @@ let renderer: THREE.WebGLRenderer,
   particle: THREE.Object3D<THREE.Event>;
 
 export default function Home() {
+
+ 
   const { t } = useTranslation();
 
   const canvasInit = () => {
@@ -136,6 +138,10 @@ export default function Home() {
       window.removeEventListener("resize", handleResize)
     }
   }, [])
+  const handleGoTicket = async()=>{
+   
+    router.push('/passport')
+  }
   return (
     <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  relative">
       <div className=' w-full absolute top-0 left-0 min-h-screen z-999'>
@@ -150,7 +156,7 @@ export default function Home() {
             <h2>{t('index_desc_2')}</h2>
 
             <button className="py-2 bg-white px-8 mt-6 text-black rounded-full">
-              <a className='hover:text-red'   onClick={() => router.push('/passport')}>{t('join_btn')}</a>
+              <a className='hover:text-red'   onClick={() =>{ handleGoTicket()}}>{t('join_btn')}</a>
             </button>
 
           </div>

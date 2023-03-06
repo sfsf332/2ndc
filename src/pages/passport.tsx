@@ -102,7 +102,7 @@ export default function Passport() {
                                 {connected ? (
                                     <button
                                         className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                        onClick={() => { write() }}
+                                        onClick={() => { write?.() }}
                                         // disabled={!genesisMint || isMintLoading || isMintStarted}
                                      
                                     >

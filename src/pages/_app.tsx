@@ -12,6 +12,7 @@ import {
   RainbowKitProvider,
   getDefaultWallets,
   connectorsForWallets,
+  darkTheme
 } from '@rainbow-me/rainbowkit';
 import { argentWallet, trustWallet } from '@rainbow-me/rainbowkit/wallets';
 import { createClient, configureChains, WagmiConfig, goerli } from 'wagmi';
@@ -55,7 +56,7 @@ class MyApp extends App {
 
     return (
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider appInfo={appInfo} chains={chains}>
+        <RainbowKitProvider appInfo={appInfo}  theme={darkTheme()} chains={chains}>
         <I18nextProvider i18n={i18n}>
           <main className={myFont.className + ' w-full h-[100vh] flex flex-col bg-[#000] overflow-hidden text-white '}>
             <div className="py-2" >

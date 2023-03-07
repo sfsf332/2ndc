@@ -144,7 +144,7 @@ export default function Passport() {
                     <p className=' py-2'>{t('passport_link_intro')}<a href="#">{t('passport_link_text')}</a></p>
                     <div className='flex justify-between pt-0 mt-12'>
 
-                        <div className="  w-[360px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
+                        <div className="  w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
                             <FlipCard>
                                 <FrontCard isCardFlipped={gnSuccess}>
                                     <div className="w-full text-base" >
@@ -204,7 +204,7 @@ export default function Passport() {
                                 </BackCard>
                             </FlipCard>
                         </div>
-                        <div className="  w-[30%] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
+                        <div className="  w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
                             <FlipCard>
                                 <FrontCard isCardFlipped={famsSuccess}>
                                     <div className="w-full text-base" >
@@ -264,7 +264,7 @@ export default function Passport() {
                                 </BackCard>
                             </FlipCard>
                         </div>
-                        <div className="  w-[30%] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
+                        <div className="  w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
                             <FlipCard>
                                 <FrontCard isCardFlipped={famsSuccess}>
                                     <div className="w-full text-base" >

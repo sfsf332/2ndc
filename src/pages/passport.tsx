@@ -4,6 +4,8 @@ import GenesisNFT from '../genesisNft.json';
 import FlipCard, { BackCard, FrontCard } from '../components/FlipCard';
 import Image from 'next/image';
 import demoNft from '../assets/nft_demo.jpg'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
     useAccount,
     useContractRead,
@@ -16,6 +18,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import React from 'react';
 import { BigNumber, ethers } from 'ethers';
+import ReactLoading from 'react-loading';
 
 const contractConfig = {
     address: '0x6E8D1838ce1c6425887c6B8E03029fC63F3DACA2',
@@ -23,10 +26,8 @@ const contractConfig = {
 };
 export default function Passport() {
     const { t } = useTranslation();
-    // const [mounted, setMounted] = React.useState(false);
-    const [supply, setSupply] = React.useState(0);
     const [minted, setMinted] = React.useState(false);
-    // React.useEffect(() => setMounted(true), []);
+    const [supply, setSupply] = React.useState(0);
     const [connected, setConnected] = React.useState(false);
     const { isConnected, address } = useAccount();
     const { config: configGenesisMint } = usePrepareContractWrite({
@@ -34,11 +35,9 @@ export default function Passport() {
         abi: MintSndcNFT.abi,
         functionName: 'genesisMint',
         args: [],
-
         overrides: {
             value: ethers.utils.parseEther('0.4'),
-            gasLimit: BigNumber.from('30000'),
-
+            gasLimit: BigNumber.from('300000'),
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
@@ -48,29 +47,9 @@ export default function Passport() {
         args: [],
         overrides: {
             value: ethers.utils.parseEther('0.25'),
-            gasLimit: BigNumber.from('30000'),
-            // gasLimit: ethers.utils.parseEther('0.00001'),
-            // gasPrice:  ethers.utils.parseEther('0.00005')
+            gasLimit: BigNumber.from('300000'),
         },
     })
-    const { config: configFreeMint } = usePrepareContractWrite({
-        address: '0x6E8D1838ce1c6425887c6B8E03029fC63F3DACA2',
-        abi: MintSndcNFT.abi,
-        functionName: 'frensMint',
-        args: [address, 1],
-        overrides: {
-
-            gasLimit: BigNumber.from('30000'),
-        },
-    })
-
-    // const {
-    //     data: mintData,
-    //     write: handleMint,
-    //     isLoading: isMintLoading,
-    //     isSuccess: isMintStarted,
-    //     error: mintError,
-    // } = useContractWrite(config as UseContractWriteConfig);
 
     const {
         data: genesisData,
@@ -83,15 +62,10 @@ export default function Passport() {
         data: famsData,
         isLoading: famsIsLoading,
         isSuccess: famsSuccess,
+        error: famsError,
         write: famsMint
     } = useContractWrite(configFamsMint)
 
-    const {
-        data: frenData,
-        isLoading: frenIsLoading,
-        isSuccess: frenSuccess,
-        write: frenMint
-    } = useContractWrite(configFreeMint)
 
 
     const { data: genesisMintInfo }: any = useContractRead({
@@ -107,20 +81,22 @@ export default function Passport() {
     } = useWaitForTransaction({
         hash: genesisData?.hash,
     });
+
     const {
         data: faData,
-        isSuccess: txSuccess,
+        isSuccess: faSuccess,
         error: faError,
     } = useWaitForTransaction({
         hash: famsData?.hash,
     });
-    const {
-        data: frData,
-        isSuccess: frSuccess,
-        error: frError,
-    } = useWaitForTransaction({
-        hash: frenData?.hash,
-    });
+
+
+    // if (faError) {
+    //     toast.error('Fams mint error,the transaction is failed,please try again later')
+    // }
+    // if (gnError) {
+    //     toast.error('Genesis mint error,the transaction is failed,please try again later')
+    // }
     React.useEffect(() => {
         setConnected(isConnected)
 
@@ -129,8 +105,6 @@ export default function Passport() {
     React.useEffect(() => {
         console.log(genesisMintInfo)
         setSupply(genesisMintInfo?._hex * 1)
-
-
     }, [genesisMintInfo]);
 
 
@@ -144,44 +118,123 @@ export default function Passport() {
                     <p className=' py-2'>{t('passport_link_intro')}<a href="#">{t('passport_link_text')}</a></p>
                     <div className='flex justify-between pt-0 mt-12'>
 
-                        <div className="  w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
+                        <div className="w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl relative text-base ">
                             <FlipCard>
-                                <FrontCard isCardFlipped={gnSuccess}>
-                                    <div className="w-full text-base" >
-                                        <p className='text-right text-red text-sm'>{'01'}</p>
-                                        <h2 className='text-xl py-2 pt-6'>{t('passport_title_type1')}</h2>
-                                        <ul className='text-sm leading-[1.6rem] mt-4'>
-                                            <li className='text-sm py-2'>- {t('passport_intro1_type1')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro2_type1')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro3_type1')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro4_type1')}</li>
-                                        </ul>
-                                        <p className='flex justify-between mt-8'>
-                                            <span className='text-sm'>- {t('label_progress')}</span>
-                                            <span>{supply}/321</span>
-                                        </p>
-                                        {connected ? (
-                                            <button
-                                                className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                // onClick={() => { setMinted(true) }}
-                                                onClick={() => { genesisMint?.() }}
-                                            >
-                                                <span className='text-red mr-2'>-</span>
-                                                <span>
-                                                    0.4E
-                                                </span>
-                                                <span className='text-red  ml-2'>  -</span>
-                                            </button>
-                                        ) : (
-                                            <div className="py-2px-8 mt-8  flex items-center justify-center">
-                                                <ConnectButton />
-                                            </div>
-                                        )}
-                                    </div>
+                              
+                                {/* <FrontCard isCardFlipped={gnSuccess}> */}
+                                <FrontCard isCardFlipped={minted}>
+                                    {genesIsLoading ?
+                                        <div className=' w-full h-full bg-opacity-80 text-center flex  items-center justify-center'>
+                                            <ReactLoading type='bars' color="#fff" />
 
+                                            <div>Minting...</div>
+                                        </div> :
+                                        <div className="w-full text-base" >
+                                            <p className='text-right text-red text-sm'>{'01'}</p>
+                                            <h2 className='text-xl py-2 pt-6'>{t('passport_title_type1')}</h2>
+                                            <ul className='text-sm leading-[1.6rem] mt-4'>
+                                                <li className='text-sm py-2'>- {t('passport_intro1_type1')}</li>
+                                                <li className='text-sm py-2'>- {t('passport_intro2_type1')}</li>
+                                                <li className='text-sm py-2'>- {t('passport_intro3_type1')}</li>
+                                                <li className='text-sm py-2'>- {t('passport_intro4_type1')}</li>
+                                            </ul>
+                                            <p className='flex justify-between mt-8'>
+                                                <span className='text-sm'>- {t('label_progress')}</span>
+                                                <span>{supply}/321</span>
+                                            </p>
+                                            {connected ? (
+                                                <button
+                                                    className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
+                                                    onClick={() => { setMinted(true) }}
+                                                    // onClick={() => { genesisMint?.() }}
+                                                >
+                                                    <span className='text-red mr-2'>-</span>
+                                                    <span>
+                                                        0.4E
+                                                    </span>
+                                                    <span className='text-red  ml-2'>  -</span>
+                                                </button>
+                                            ) : (
+                                                <div className="py-2px-8 mt-8  flex items-center justify-center">
+                                                    <ConnectButton />
+                                                </div>
+                                            )}
+                                        </div>
+                                    }
                                 </FrontCard>
-                                <BackCard isCardFlipped={gnSuccess}>
+                                {/* <BackCard isCardFlipped={gnSuccess}> */}
+                                <BackCard isCardFlipped={minted}>
                                     {/* <div className='relative'> */}
+                                    <div className='flex h-full flex-col justify-between'>
+                                        <Image
+                                            src={demoNft}
+                                            width="300"
+                                            height="300"
+                                            alt="NFT"
+                                            className='rounded-lg'
+                                        />
+                                        <div className='flex justify-between  divide-x'>
+                                            <a 
+                                               className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
+                                            href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
+                                                Etherscan
+                                            </a>
+                                            <a
+                                            className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
+                                                href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}/1`}
+                                            >
+                                                Opensea
+                                            </a>
+                                        </div>
+                                    </div>
+                                </BackCard>
+                            </FlipCard>
+                        </div>
+                        <div className="w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl relative text-base ">
+
+                            <FlipCard>
+                                <FrontCard isCardFlipped={faSuccess}>
+                                    {famsIsLoading ?
+                                        <div className=' w-full h-full bg-opacity-80 text-center flex  items-center justify-center'>
+                                            <ReactLoading type='bars' color="#fff" />
+
+                                            <div>Minting...</div>
+                                        </div> :
+                                        <div className="w-full text-base" >
+                                            <p className='text-right text-red text-sm'>{'02'}</p>
+                                            <h2 className='text-xl py-2 pt-6'>{t('passport_title_type2')}</h2>
+                                            {/* <h3 className=' py-1 underline decoration-wavy text-red'>功能描述&nbsp;&nbsp;</h3> */}
+                                            <ul className='text-sm leading-[1.6rem] mt-4'>
+                                                <li className='text-sm py-2'>- {t('passport_intro1_type2')}</li>
+                                                <li className='text-sm py-2'>- {t('passport_intro2_type2')}</li>
+                                                <li className='text-sm py-2'>- {t('passport_intro3_type2')}</li>
+                                                <li className='text-sm py-2'>- {t('passport_intro4_type2')}</li>
+                                            </ul>
+                                            <p className='flex justify-between mt-8'>
+                                                <span className='text-sm'>- {t('label_progress')}</span>
+                                                <span>Checking</span>
+                                            </p>
+                                            {connected ? (
+                                                <button
+                                                    className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
+                                                    onClick={() => { famsMint?.() }}
+                                                >
+                                                    <span className='text-red mr-2'>-</span>
+
+                                                    <span>
+
+                                                        0.25E
+                                                    </span>
+                                                    <span className='text-red  ml-2'>  -</span>
+                                                </button>
+                                            ) : (
+                                                <div className="py-2px-8 mt-8  flex items-center justify-center">
+                                                    <ConnectButton />
+                                                </div>
+                                            )}
+                                        </div>}
+                                </FrontCard>
+                                <BackCard isCardFlipped={faSuccess}>
                                     <div>
                                         <Image
                                             src={demoNft}
@@ -205,126 +258,37 @@ export default function Passport() {
                             </FlipCard>
                         </div>
                         <div className="  w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
-                            <FlipCard>
-                                <FrontCard isCardFlipped={famsSuccess}>
-                                    <div className="w-full text-base" >
-                                        <p className='text-right text-red text-sm'>{'02'}</p>
-                                        <h2 className='text-xl py-2 pt-6'>{t('passport_title_type2')}</h2>
-                                        {/* <h3 className=' py-1 underline decoration-wavy text-red'>功能描述&nbsp;&nbsp;</h3> */}
-                                        <ul className='text-sm leading-[1.6rem] mt-4'>
-                                            <li className='text-sm py-2'>- {t('passport_intro1_type2')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro2_type2')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro3_type2')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro4_type2')}</li>
-                                        </ul>
-                                        <p className='flex justify-between mt-8'>
-                                            <span className='text-sm'>- {t('label_progress')}</span>
-                                            <span>Checking</span>
-                                        </p>
-                                        {connected ? (
-                                            <button
-                                                className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                onClick={() => { famsMint?.() }}
-                                            >
-                                                <span className='text-red mr-2'>-</span>
 
-                                                <span>
+                            <div className="w-full text-base" >
+                                <p className='text-right text-red text-sm'>03</p>
+                                <h2 className='text-xl py-2 pt-6'>{t('passport_title_type3')}</h2>
+                                <ul className='text-sm leading-[1.6rem] mt-4'>
+                                    <li className='text-sm py-2'>- {t('passport_intro1_type3')}</li>
+                                    <li className='text-sm py-2'>- {t('passport_intro2_type3')}</li>
+                                    <li className='text-sm py-2'>&nbsp;</li>
+                                    <li className='text-sm py-2'>&nbsp;</li>
+                                </ul>
+                                <p className='flex justify-between mt-8'>
+                                    <span className='text-sm'>- {t('label_progress')}</span>
+                                    <span>Checking</span>
+                                </p>
 
-                                                    0.25E
-                                                </span>
-                                                <span className='text-red  ml-2'>  -</span>
-                                            </button>
-                                        ) : (
-                                            <div className="py-2px-8 mt-8  flex items-center justify-center">
-                                                <ConnectButton />
-                                            </div>
-                                        )}
-                                    </div>
-                                </FrontCard>
-                                <BackCard isCardFlipped={famsSuccess}>
-                                    <div>
-                                        <Image
-                                            src={demoNft}
-                                            width="300"
-                                            height="300"
-                                            alt="NFT"
-                                            className='rounded-lg'
-                                        />
-                                        <div>
-                                            <a href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
-                                                Etherscan
-                                            </a>
-                                            <a
-                                                href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}/1`}
-                                            >
-                                                Opensea
-                                            </a>
-                                        </div>
-                                    </div>
-                                </BackCard>
-                            </FlipCard>
-                        </div>
-                        <div className="  w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl  text-base ">
-                            <FlipCard>
-                                <FrontCard isCardFlipped={famsSuccess}>
-                                    <div className="w-full text-base" >
-                                        <p className='text-right text-red text-sm'>03</p>
-                                        <h2 className='text-xl py-2 pt-6'>{t('passport_title_type3')}</h2>
-                                        {/* <h3 className=' py-1 underline decoration-wavy text-red'>功能描述&nbsp;&nbsp;</h3> */}
-                                        <ul className='text-sm leading-[1.6rem] mt-4'>
-                                            <li className='text-sm py-2'>- {t('passport_intro1_type3')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro2_type3')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro3_type3')}</li>
-                                            <li className='text-sm py-2'>- {t('passport_intro4_type3')}</li>
-                                        </ul>
-                                        <p className='flex justify-between mt-8'>
-                                            <span className='text-sm'>- {t('label_progress')}</span>
-                                            <span>Checking</span>
-                                        </p>
 
-                                        {connected ? (
-                                            <button
-                                                className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                onClick={() => { frenMint?.() }}
-                                            >
-                                                <span className='text-red mr-2'>-</span>
+                                <button
+                                    className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
 
-                                                <span>
+                                >
+                                    <span className='text-red mr-2'>-</span>
 
-                                                    {t('label_freemint')}
-                                                </span>
-                                                <span className='text-red  ml-2'>  -</span>
-                                            </button>
-                                        ) : (
-                                            <div className="py-2px-8 mt-8  flex items-center justify-center">
-                                                <ConnectButton />
-                                            </div>
-                                        )}
-                                    </div>
-                                </FrontCard>
-                                <BackCard isCardFlipped={frenSuccess}>
-                                    {/* <div className='relative'> */}
-                                    <div>
-                                        <Image
-                                            src={demoNft}
-                                            width="300"
-                                            height="300"
-                                            alt="NFT"
-                                            className='rounded-lg'
-                                        />
-                                        <div>
-                                            <a href={`https://goerli.etherscan.io/tx/${frenData?.hash}`}>
-                                                Etherscan
-                                            </a>
-                                            <a
-                                                href={`https://testnets.opensea.io/assets/goerli/${frData?.to}/1`}
-                                            >
-                                                Opensea
-                                            </a>
-                                        </div>
-                                    </div>
-                                </BackCard>
-                            </FlipCard>
+                                    <span>
+
+                                        {t('contact_us')}
+                                    </span>
+                                    <span className='text-red  ml-2'>  -</span>
+                                </button>
+
+                            </div>
+
                         </div>
 
 
@@ -332,7 +296,7 @@ export default function Passport() {
                     </div>
                 </div>
             </div>
-
+            <ToastContainer />
         </div>
     )
 }

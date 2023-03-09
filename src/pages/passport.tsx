@@ -20,10 +20,7 @@ import React from 'react';
 import { BigNumber, ethers } from 'ethers';
 import ReactLoading from 'react-loading';
 
-const contractConfig = {
-    address: '0x6E8D1838ce1c6425887c6B8E03029fC63F3DACA2',
-    MintSndcNFT,
-};
+
 export default function Passport() {
     const { t } = useTranslation();
     const [minted, setMinted] = React.useState(false);
@@ -50,6 +47,30 @@ export default function Passport() {
             gasLimit: BigNumber.from('300000'),
         },
     })
+    const mintGenesis = () => {
+        
+        if(supply>=321){
+            toast.error('Out of supply')
+            return
+        }
+        debugger
+        if(genesisMinted?._hex*1>0){
+            toast.error('You have already minted a Genesis NFT')
+            return
+        }
+        genesisMint?.()
+        
+    }
+    const mintFams = async () => {
+       
+        if(famsMinted?._hex*1>0){
+            toast.error('You have already minted a Fams NFT')
+            return
+        }
+        famsMint?.()
+        
+    }
+   
 
     const {
         data: genesisData,
@@ -74,6 +95,19 @@ export default function Passport() {
         functionName: 'totalSupply',
         watch: true,
     } as UseContractReadConfig);
+    const { data: genesisMinted }: any = useContractRead({
+        address: '0x4eb7F91cbc8317855A33f9BED19C3f91cA623E8b',
+        abi: GenesisNFT.abi,
+        functionName: 'numberMinted',
+        args: [address],
+    } as UseContractReadConfig);
+    const { data: famsMinted }: any = useContractRead({
+        address: '0xb575A42F7A9507c838Cc81C094eD47b7779bBA63',
+        abi: GenesisNFT.abi,
+        functionName: 'numberMinted',
+        args: [address],
+    } as UseContractReadConfig);
+    
     const {
         data: gnData,
         isSuccess: gnSuccess,
@@ -154,8 +188,7 @@ export default function Passport() {
                                             {connected ? (
                                                 <button
                                                     className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                    // onClick={() => { setMinted(true) }}
-                                                    onClick={() => { genesisMint?.() }}
+                                                    onClick={() => { mintGenesis() }}
                                                 >
                                                     <span className='text-red mr-2'>-</span>
                                                     <span>
@@ -228,7 +261,6 @@ export default function Passport() {
                                             <div className="w-full text-base" >
                                                 <p className='text-right text-red text-sm'>{'02'}</p>
                                                 <h2 className='text-xl py-2 pt-6'>{t('passport_title_type2')}</h2>
-                                                {/* <h3 className=' py-1 underline decoration-wavy text-red'>功能描述&nbsp;&nbsp;</h3> */}
                                                 <ul className='text-sm leading-[1.6rem] mt-4'>
                                                     <li className='text-sm py-2'>- {t('passport_intro1_type2')}</li>
                                                     <li className='text-sm py-2'>- {t('passport_intro2_type2')}</li>
@@ -242,7 +274,8 @@ export default function Passport() {
                                                 {connected ? (
                                                     <button
                                                         className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                        onClick={() => { famsMint?.() }}
+                                                        onClick={() => { mintFams() }}
+                                               
                                                     >
                                                         <span className='text-red mr-2'>-</span>
 

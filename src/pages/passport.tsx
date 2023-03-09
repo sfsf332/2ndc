@@ -254,9 +254,8 @@ export default function Passport() {
                                             </a>
                                             <a
                                                 target={'_blank'}
-
                                                 className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                href={`https://testnets.opensea.io/assets/goerli/${famsData?.to}/1`}
+                                                href={`https://testnets.opensea.io/assets/goerli/${faData?.to}/1`}
                                             >
                                                 Opensea
                                             </a>

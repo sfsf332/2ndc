@@ -48,29 +48,29 @@ export default function Passport() {
         },
     })
     const mintGenesis = () => {
-        
-        if(supply>=321){
+
+        if (supply >= 321) {
             toast.error('Out of supply')
             return
         }
         debugger
-        if(genesisMinted?._hex*1>0){
+        if (genesisMinted?._hex * 1 > 0) {
             toast.error('You have already minted a Genesis NFT')
             return
         }
         genesisMint?.()
-        
+
     }
     const mintFams = async () => {
-       
-        if(famsMinted?._hex*1>0){
+
+        if (famsMinted?._hex * 1 > 0) {
             toast.error('You have already minted a Fams NFT')
             return
         }
         famsMint?.()
-        
+
     }
-   
+
 
     const {
         data: genesisData,
@@ -107,7 +107,7 @@ export default function Passport() {
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
-    
+
     const {
         data: gnData,
         isSuccess: gnSuccess,
@@ -210,13 +210,19 @@ export default function Passport() {
                                     {/* <BackCard isCardFlipped={minted}> */}
                                     {/* <div className='relative'> */}
                                     <div className='flex h-full flex-col justify-between'>
-                                        <Image
-                                            src={demoNft}
+
+                                        <video
+                                            src="/nft.mp4"
                                             width="300"
                                             height="300"
-                                            alt="NFT"
-                                            className='rounded-lg'
-                                        />
+                                            //  onLoad={loadingVideo} 
+                                            // onLoad={() => loadingVideo}
+                                            loop={true}
+                                            controls={false}
+                                            preload="auto"
+                                            autoPlay={true}
+                                            muted
+                                        ></video>
                                         <div className='flex justify-between  divide-x'>
                                             <a
                                                 target={'_blank'}
@@ -275,7 +281,7 @@ export default function Passport() {
                                                     <button
                                                         className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
                                                         onClick={() => { mintFams() }}
-                                               
+
                                                     >
                                                         <span className='text-red mr-2'>-</span>
 
@@ -295,13 +301,25 @@ export default function Passport() {
                                 </FrontCard>
                                 <BackCard isCardFlipped={faSuccess}>
                                     <div className='flex h-full flex-col justify-between'>
-                                        <Image
+                                        {/* <Image
                                             src={demoNft}
                                             width="300"
                                             height="300"
                                             alt="NFT"
                                             className='rounded-lg'
-                                        />
+                                        /> */}
+                                        <video
+                                            src="/nft.mp4"
+                                            width="300"
+                                            height="300"
+                                            //  onLoad={loadingVideo} 
+                                            // onLoad={() => loadingVideo}
+                                            loop={true}
+                                            controls={false}
+                                            preload="auto"
+                                            autoPlay={true}
+                                            muted
+                                        ></video>
                                         <div className='flex justify-between  divide-x'>
                                             <a
                                                 target={'_blank'}

@@ -120,7 +120,7 @@ export default function Passport() {
 
                         <div className="w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl relative text-base ">
                             <FlipCard>
-                              
+
                                 {/* <FrontCard isCardFlipped={gnSuccess}> */}
                                 <FrontCard isCardFlipped={minted}>
                                     {genesIsLoading ?
@@ -146,7 +146,7 @@ export default function Passport() {
                                                 <button
                                                     className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
                                                     onClick={() => { setMinted(true) }}
-                                                    // onClick={() => { genesisMint?.() }}
+                                                // onClick={() => { genesisMint?.() }}
                                                 >
                                                     <span className='text-red mr-2'>-</span>
                                                     <span>
@@ -174,13 +174,15 @@ export default function Passport() {
                                             className='rounded-lg'
                                         />
                                         <div className='flex justify-between  divide-x'>
-                                            <a 
-                                               className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
-                                            href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
+                                            <a
+                                                target={'_blank'}
+                                                className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
+                                                href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
                                                 Etherscan
                                             </a>
                                             <a
-                                            className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
+                                                target={'_blank'}
+                                                className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
                                                 href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}/1`}
                                             >
                                                 Opensea
@@ -235,7 +237,7 @@ export default function Passport() {
                                         </div>}
                                 </FrontCard>
                                 <BackCard isCardFlipped={faSuccess}>
-                                    <div>
+                                    <div className='flex h-full flex-col justify-between'>
                                         <Image
                                             src={demoNft}
                                             width="300"
@@ -243,12 +245,18 @@ export default function Passport() {
                                             alt="NFT"
                                             className='rounded-lg'
                                         />
-                                        <div>
-                                            <a href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
+                                        <div className='flex justify-between  divide-x'>
+                                            <a
+                                                target={'_blank'}
+                                                className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
+                                                href={`https://goerli.etherscan.io/tx/${famsData?.hash}`}>
                                                 Etherscan
                                             </a>
                                             <a
-                                                href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}/1`}
+                                                target={'_blank'}
+
+                                                className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
+                                                href={`https://testnets.opensea.io/assets/goerli/${famsData?.to}/1`}
                                             >
                                                 Opensea
                                             </a>

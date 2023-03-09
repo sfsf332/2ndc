@@ -121,8 +121,8 @@ export default function Passport() {
                         <div className="w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl relative text-base ">
                             <FlipCard>
 
-                                {/* <FrontCard isCardFlipped={gnSuccess}> */}
-                                <FrontCard isCardFlipped={minted}>
+                                <FrontCard isCardFlipped={gnSuccess}>
+                                {/* <FrontCard isCardFlipped={minted}> */}
                                     {genesIsLoading ?
                                         <div className=' w-full h-full bg-opacity-80 text-center flex  items-center justify-center'>
                                             <ReactLoading type='bars' color="#fff" />
@@ -145,8 +145,8 @@ export default function Passport() {
                                             {connected ? (
                                                 <button
                                                     className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                    onClick={() => { setMinted(true) }}
-                                                // onClick={() => { genesisMint?.() }}
+                                                    // onClick={() => { setMinted(true) }}
+                                                onClick={() => { genesisMint?.() }}
                                                 >
                                                     <span className='text-red mr-2'>-</span>
                                                     <span>
@@ -162,8 +162,8 @@ export default function Passport() {
                                         </div>
                                     }
                                 </FrontCard>
-                                {/* <BackCard isCardFlipped={gnSuccess}> */}
-                                <BackCard isCardFlipped={minted}>
+                                <BackCard isCardFlipped={gnSuccess}>
+                                {/* <BackCard isCardFlipped={minted}> */}
                                     {/* <div className='relative'> */}
                                     <div className='flex h-full flex-col justify-between'>
                                         <Image

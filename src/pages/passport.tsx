@@ -65,7 +65,7 @@ export default function Passport() {
         error: famsError,
         write: famsMint
     } = useContractWrite(configFamsMint)
-
+    console.log(famsData)
 
 
     const { data: genesisMintInfo }: any = useContractRead({
@@ -89,7 +89,6 @@ export default function Passport() {
     } = useWaitForTransaction({
         hash: famsData?.hash,
     });
-
 
     // if (faError) {
     //     toast.error('Fams mint error,the transaction is failed,please try again later')
@@ -195,7 +194,7 @@ export default function Passport() {
                                             <a
                                                 target={'_blank'}
                                                 className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}/1`}
+                                                href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}`}
                                             >
                                                 Opensea
                                             </a>
@@ -280,7 +279,7 @@ export default function Passport() {
                                             <a
                                                 target={'_blank'}
                                                 className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                href={`https://testnets.opensea.io/assets/goerli/${faData?.to}/1`}
+                                                href={`https://testnets.opensea.io/assets/goerli/${faData?.to}`}
                                             >
                                                 Opensea
                                             </a>

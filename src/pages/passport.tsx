@@ -13,7 +13,6 @@ import {
     usePrepareContractWrite,
     useWaitForTransaction,
 } from 'wagmi';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import React from 'react';
 import { BigNumber, ethers } from 'ethers';
@@ -135,7 +134,7 @@ export default function Passport() {
                     <div className="w-[1080px] h-full mx-auto">
                         <h1 className='text-2xl py-8'>{t('passport_title')}</h1>
                         <p className=' py-2'>{t('passport_subtitle')}</p>
-                        <p className=' py-2'>{t('passport_link_intro')}<a href="#">{t('passport_link_text')}</a></p>
+                        <p className=' py-2'>{t('passport_link_intro')}<a href="https://2ndc.notion.site/ec8a2cf0d47b49ea92fd8faaf8b6f620" target={'_blank'}>{t('passport_link_text')}</a></p>
                         <div className='flex justify-between pt-0 mt-12'>
 
                             <div className="w-[340px] mx-0 bg-[#0f0e0e]  md:pb-10 md:pt-4  md:px-10 rounded-2xl relative text-base ">

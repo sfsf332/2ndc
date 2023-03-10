@@ -39,9 +39,12 @@ export default function Header() {
                                 
                             </div>
                             <div className="flex flex-row  items-center">
-                                <button className="px-1.5 py-2 rounded-md text-sm font-medium hover:text-red cursor-pointer ">
+                                <a 
+                                className="px-1.5 py-2 rounded-md text-sm font-medium hover:text-red cursor-pointer " 
+                                href='https://2ndc.notion.site/ec8a2cf0d47b49ea92fd8faaf8b6f620'
+                                 target={'_blabk'}>
                                     {t('nav_docs')}
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

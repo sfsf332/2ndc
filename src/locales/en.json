@@ -11,8 +11,8 @@
     "index_desc_1": "This could be the highest ROI",
     "index_desc_2": "You will ever get in the crypto world",
     "join_btn": "Join in",
-    "passport_title": "Welcome abord, ser.",
-    "passport_subtitle": "Chose your ticket to on board. 2ndc is ready for you.",
+    "passport_title": "Welcome aboard, ser.",
+    "passport_subtitle": "Choose your ticket to on board. 2ndc is ready for you.",
     "passport_link_intro": "Find more differences:",
     "passport_link_text": "Passport doc",
     "passport_title_type1":"Genesis",
@@ -36,6 +36,7 @@
     "social_intro":"join our club to get rich as you wish just with one click.",
     "social_intro1":"You may join discord first.",
     "label_freemint":"Free Mint",
-    "contact_us":"Contact Us"
+    "contact_us":"Contact Us",
+    "connect":"Connect Wallet"
 
 }

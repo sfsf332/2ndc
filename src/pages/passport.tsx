@@ -19,6 +19,7 @@ import { ConnectButton } from '@rainbow-me/rainbowkit';
 import React from 'react';
 import { BigNumber, ethers } from 'ethers';
 import ReactLoading from 'react-loading';
+import router from 'next/router';
 
 
 export default function Passport() {
@@ -53,13 +54,12 @@ export default function Passport() {
             toast.error('Out of supply')
             return
         }
-        debugger
+
         if (genesisMinted?._hex * 1 > 0) {
             toast.error('You have already minted a Genesis NFT')
             return
         }
         genesisMint?.()
-
     }
     const mintFams = async () => {
 
@@ -68,9 +68,7 @@ export default function Passport() {
             return
         }
         famsMint?.()
-
     }
-
 
     const {
         data: genesisData,
@@ -145,6 +143,7 @@ export default function Passport() {
 
         <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  ">
             <div className=' w-full min-h-screen mx-auto'>
+            {connected ? (
                 <div className="w-[1080px] h-full mx-auto">
                     <h1 className='text-2xl py-8'>{t('passport_title')}</h1>
                     <p className=' py-2'>{t('passport_subtitle')}</p>
@@ -185,22 +184,18 @@ export default function Passport() {
                                                 <span className='text-sm'>- {t('label_progress')}</span>
                                                 <span>{supply}/321</span>
                                             </p>
-                                            {connected ? (
-                                                <button
-                                                    className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                    onClick={() => { mintGenesis() }}
-                                                >
-                                                    <span className='text-red mr-2'>-</span>
-                                                    <span>
-                                                        0.4E
-                                                    </span>
-                                                    <span className='text-red  ml-2'>  -</span>
-                                                </button>
-                                            ) : (
-                                                <div className="py-2px-8 mt-8  flex items-center justify-center">
-                                                    <ConnectButton />
-                                                </div>
-                                            )}
+
+                                            <button
+                                                className="py-2  mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
+                                                onClick={() => { mintGenesis() }}
+                                            >
+                                                <span className='text-red mr-2'>-</span>
+                                                <span>
+                                                    0.4E
+                                                </span>
+                                                <span className='text-red  ml-2'>  -</span>
+                                            </button>
+
                                         </div>
                                     }</>}
 
@@ -277,25 +272,21 @@ export default function Passport() {
                                                     <span className='text-sm'>- {t('label_progress')}</span>
                                                     <span>Checking</span>
                                                 </p>
-                                                {connected ? (
-                                                    <button
-                                                        className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-                                                        onClick={() => { mintFams() }}
 
-                                                    >
-                                                        <span className='text-red mr-2'>-</span>
+                                                <button
+                                                    className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
+                                                    onClick={() => { mintFams() }}
 
-                                                        <span>
+                                                >
+                                                    <span className='text-red mr-2'>-</span>
 
-                                                            0.25E
-                                                        </span>
-                                                        <span className='text-red  ml-2'>  -</span>
-                                                    </button>
-                                                ) : (
-                                                    <div className="py-2px-8 mt-8  flex items-center justify-center">
-                                                        <ConnectButton />
-                                                    </div>
-                                                )}
+                                                    <span>
+
+                                                        0.25E
+                                                    </span>
+                                                    <span className='text-red  ml-2'>  -</span>
+                                                </button>
+
                                             </div>}
                                     </>}
                                 </FrontCard>
@@ -358,12 +349,10 @@ export default function Passport() {
 
                                 <button
                                     className="py-2 mx-auto bg-white flex justify-between px-8 mt-8 text-black rounded-full"
-
+                                    onClick={() => router.push('/social')}
                                 >
                                     <span className='text-red mr-2'>-</span>
-
                                     <span>
-
                                         {t('contact_us')}
                                     </span>
                                     <span className='text-red  ml-2'>  -</span>
@@ -372,11 +361,18 @@ export default function Passport() {
                             </div>
 
                         </div>
-
-
-
                     </div>
                 </div>
+                ):(
+                    <div className='flex flex-col justify-center min-h-screen items-center h-full'>
+                        <h1 className='text-[26px] my-16'>
+                            {t('passport_title')}
+                        </h1>
+                        <div className='my-16'>
+                            <ConnectButton  label={t('connect')} />
+                        </div>
+                    </div>
+                )}
             </div>
             <ToastContainer />
         </div>

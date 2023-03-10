@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import Logo from '../assets/logo_2ndc.png'
 import { useTranslation } from "react-i18next";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { Web3ConnectButton } from './Web3ConnectButton';
 
 
 export default function Header() {
@@ -58,7 +59,7 @@ export default function Header() {
                         :
                         i18n.changeLanguage("en")
                 }}>{t('change_lang')}</button>
-                <ConnectButton />
+               <Web3ConnectButton />
             </div>
         </div>)
 }

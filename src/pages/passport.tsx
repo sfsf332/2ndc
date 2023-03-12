@@ -27,7 +27,7 @@ export default function Passport() {
     const [connected, setConnected] = React.useState(false);
     const { isConnected, address } = useAccount();
     const { config: configGenesisMint } = usePrepareContractWrite({
-        address: '0x6E8D1838ce1c6425887c6B8E03029fC63F3DACA2',
+        address: '0x9D515138DEe8a5e251321191e4103ccD9Bdc7207',
         abi: MintSndcNFT.abi,
         functionName: 'genesisMint',
         args: [],
@@ -37,7 +37,7 @@ export default function Passport() {
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
-        address: '0x6E8D1838ce1c6425887c6B8E03029fC63F3DACA2',
+        address: '0x9D515138DEe8a5e251321191e4103ccD9Bdc7207',
         abi: MintSndcNFT.abi,
         functionName: 'famsMint',
         args: [],
@@ -84,19 +84,19 @@ export default function Passport() {
     } = useContractWrite(configFamsMint)
 
     const { data: genesisMintInfo }: any = useContractRead({
-        address: '0x4eb7F91cbc8317855A33f9BED19C3f91cA623E8b',
+        address: '0xD0961ad41fBdb698a5c5Ea0c993fFe4e88494a1e',
         abi: GenesisNFT.abi,
         functionName: 'totalSupply',
         watch: true,
     } as UseContractReadConfig);
     const { data: genesisMinted }: any = useContractRead({
-        address: '0x4eb7F91cbc8317855A33f9BED19C3f91cA623E8b',
+        address: '0xD0961ad41fBdb698a5c5Ea0c993fFe4e88494a1e',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
     const { data: famsMinted }: any = useContractRead({
-        address: '0xb575A42F7A9507c838Cc81C094eD47b7779bBA63',
+        address: '0x4F7dD977613775a5A07F3b325e4d9b2032e9CF39',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
@@ -194,7 +194,7 @@ export default function Passport() {
                                         <div className='flex h-full flex-col justify-between'>
 
                                             <video
-                                                src="/nft.mp4"
+                                                src="/genesis.mp4"
                                                 width="300"
                                                 height="300"
                                                 //  onLoad={loadingVideo} 
@@ -287,7 +287,7 @@ export default function Passport() {
                                             className='rounded-lg'
                                         /> */}
                                             <video
-                                                src="/nft.mp4"
+                                                src="/fams.mp4"
                                                 width="300"
                                                 height="300"
                                                 //  onLoad={loadingVideo} 

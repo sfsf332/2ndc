@@ -96,12 +96,12 @@ export default function Passport() {
         args: [address],
     } as UseContractReadConfig);
     const { data: famsMinted }: any = useContractRead({
-        address: '0x4F7dD977613775a5A07F3b325e4d9b2032e9CF39',
+        address: '0x8674210A9853ed9cF8357D7F21A10999F8282189',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
-
+    // console.log(famsMinted)
     const {
         data: gnData,
         isSuccess: gnSuccess,

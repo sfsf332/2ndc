@@ -215,7 +215,7 @@ export default function Passport() {
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                    href={`https://testnets.opensea.io/assets/goerli/${gnData?.to}`}
+                                                    href={`https://testnets.opensea.io/assets/goerli/0xd0961ad41fbdb698a5c5ea0c993ffe4e88494a1e/${supply-1}`}
                                                 >
                                                     Opensea
                                                 </a>
@@ -308,7 +308,7 @@ export default function Passport() {
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                    href={`https://testnets.opensea.io/assets/goerli/${faData?.to}`}
+                                                    href={`https://testnets.opensea.io/assets/goerli/0x8674210a9853ed9cf8357d7f21a10999f8282189/${supply-1}`}
                                                 >
                                                     Opensea
                                                 </a>

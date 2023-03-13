@@ -27,7 +27,7 @@ export default function Passport() {
     const [connected, setConnected] = React.useState(false);
     const { isConnected, address } = useAccount();
     const { config: configGenesisMint } = usePrepareContractWrite({
-        address: '0x9D515138DEe8a5e251321191e4103ccD9Bdc7207',
+        address: '0xfa0d6BB11D53Ab1be30FBA89b972b506c3F59b09',
         abi: MintSndcNFT.abi,
         functionName: 'genesisMint',
         args: [],
@@ -37,7 +37,7 @@ export default function Passport() {
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
-        address: '0x9D515138DEe8a5e251321191e4103ccD9Bdc7207',
+        address: '0xfa0d6BB11D53Ab1be30FBA89b972b506c3F59b09',
         abi: MintSndcNFT.abi,
         functionName: 'famsMint',
         args: [],
@@ -84,19 +84,19 @@ export default function Passport() {
     } = useContractWrite(configFamsMint)
 
     const { data: genesisMintInfo }: any = useContractRead({
-        address: '0xD0961ad41fBdb698a5c5Ea0c993fFe4e88494a1e',
+        address: '0x805D50aeA0782C809F8DCCf98af18100D8C4FF28',
         abi: GenesisNFT.abi,
         functionName: 'totalSupply',
         watch: true,
     } as UseContractReadConfig);
     const { data: genesisMinted }: any = useContractRead({
-        address: '0xD0961ad41fBdb698a5c5Ea0c993fFe4e88494a1e',
+        address: '0x805D50aeA0782C809F8DCCf98af18100D8C4FF28',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
     const { data: famsMinted }: any = useContractRead({
-        address: '0x8674210A9853ed9cF8357D7F21A10999F8282189',
+        address: '0x115DDeF62C8d57D90fBc1036E735275382a74ce1',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
@@ -209,13 +209,13 @@ export default function Passport() {
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
-                                                    href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
+                                                    href={`https://etherscan.io/tx/${genesisData?.hash}`}>
                                                     Etherscan
                                                 </a>
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                    href={`https://testnets.opensea.io/assets/goerli/0xd0961ad41fbdb698a5c5ea0c993ffe4e88494a1e/${supply-1}`}
+                                                    href={`https://opensea.io/assets/0x805D50aeA0782C809F8DCCf98af18100D8C4FF28/${supply-1}`}
                                                 >
                                                     Opensea
                                                 </a>
@@ -235,7 +235,7 @@ export default function Passport() {
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2 w-1/2  bg-white text-black text-center rounded-full "
-                                                    href={`https://goerli.etherscan.io/tx/${genesisData?.hash}`}>
+                                                    href={`https://etherscan.io/tx/${genesisData?.hash}`}>
                                                     Etherscan
                                                 </a>
                                             </div>
@@ -302,13 +302,13 @@ export default function Passport() {
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
-                                                    href={`https://goerli.etherscan.io/tx/${famsData?.hash}`}>
+                                                    href={`https://etherscan.io/tx/${famsData?.hash}`}>
                                                     Etherscan
                                                 </a>
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                    href={`https://testnets.opensea.io/assets/goerli/0x8674210a9853ed9cf8357d7f21a10999f8282189/${supply-1}`}
+                                                    href={`https://opensea.io/assets/0x8674210a9853ed9cf8357d7f21a10999f8282189/${supply-1}`}
                                                 >
                                                     Opensea
                                                 </a>

@@ -84,19 +84,19 @@ export default function Passport() {
     } = useContractWrite(configFamsMint)
 
     const { data: genesisMintInfo }: any = useContractRead({
-        address: '0x805D50aeA0782C809F8DCCf98af18100D8C4FF28',
+        address: '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40',
         abi: GenesisNFT.abi,
         functionName: 'totalSupply',
         watch: true,
     } as UseContractReadConfig);
     const { data: genesisMinted }: any = useContractRead({
-        address: '0x805D50aeA0782C809F8DCCf98af18100D8C4FF28',
+        address: '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
     const { data: famsMinted }: any = useContractRead({
-        address: '0x115DDeF62C8d57D90fBc1036E735275382a74ce1',
+        address: '0xB99f77343A870BF23D391501EEc999efca52Fbf4',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
@@ -169,7 +169,7 @@ export default function Passport() {
                                                 </ul>
                                                 <p className='flex justify-between mt-8'>
                                                     <span className='text-sm'>- {t('label_progress')}</span>
-                                                    <span>{222-supply}/321</span>
+                                                    <span>{99+supply}/321</span>
                                                 </p>
 
                                                 <button

@@ -27,7 +27,7 @@ export default function Passport() {
     const [connected, setConnected] = React.useState(false);
     const { isConnected, address } = useAccount();
     const { config: configGenesisMint } = usePrepareContractWrite({
-        address: '0xfa0d6BB11D53Ab1be30FBA89b972b506c3F59b09',
+        address: '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40',
         abi: MintSndcNFT.abi,
         functionName: 'genesisMint',
         args: [],
@@ -37,7 +37,7 @@ export default function Passport() {
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
-        address: '0xfa0d6BB11D53Ab1be30FBA89b972b506c3F59b09',
+        address: '0xB99f77343A870BF23D391501EEc999efca52Fbf4',
         abi: MintSndcNFT.abi,
         functionName: 'famsMint',
         args: [],
@@ -169,7 +169,7 @@ export default function Passport() {
                                                 </ul>
                                                 <p className='flex justify-between mt-8'>
                                                     <span className='text-sm'>- {t('label_progress')}</span>
-                                                    <span>{supply}/321</span>
+                                                    <span>{222-supply}/321</span>
                                                 </p>
 
                                                 <button

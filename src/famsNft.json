@@ -129,7 +129,7 @@
             "inputs": [
                 {
                     "internalType": "address",
-                    "name": "operator",
+                    "name": "to",
                     "type": "address"
                 },
                 {
@@ -152,6 +152,19 @@
                 }
             ],
             "name": "balanceOf",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "duration",
             "outputs": [
                 {
                     "internalType": "uint256",
@@ -200,19 +213,6 @@
                     "internalType": "bool",
                     "name": "",
                     "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "maxSupply",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
                 }
             ],
             "stateMutability": "view",
@@ -285,19 +285,6 @@
         },
         {
             "inputs": [],
-            "name": "operatorFilteringEnabled",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
             "name": "owner",
             "outputs": [
                 {
@@ -342,70 +329,23 @@
             "type": "function"
         },
         {
-            "inputs": [],
-            "name": "renounceOwnership",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "to",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "amount",
-                    "type": "uint256"
-                }
-            ],
-            "name": "reserveMint",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "reserveSupply",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
             "inputs": [
                 {
                     "internalType": "uint256",
                     "name": "_tokenId",
                     "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_salePrice",
-                    "type": "uint256"
                 }
             ],
-            "name": "royaltyInfo",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
+            "name": "renew",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [],
+            "name": "renounceOwnership",
+            "outputs": [],
+            "stateMutability": "nonpayable",
             "type": "function"
         },
         {
@@ -450,7 +390,7 @@
                 },
                 {
                     "internalType": "bytes",
-                    "name": "data",
+                    "name": "_data",
                     "type": "bytes"
                 }
             ],
@@ -506,56 +446,12 @@
         {
             "inputs": [
                 {
-                    "internalType": "address",
-                    "name": "receiver",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint96",
-                    "name": "feeNumerator",
-                    "type": "uint96"
-                }
-            ],
-            "name": "setDefaultRoyalty",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "bool",
-                    "name": "value",
-                    "type": "bool"
-                }
-            ],
-            "name": "setOperatorFilteringEnabled",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
                     "internalType": "uint256",
                     "name": "_price",
                     "type": "uint256"
                 }
             ],
             "name": "setPrice",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "_reserveSupply",
-                    "type": "uint256"
-                }
-            ],
-            "name": "setReserveSupply",
             "outputs": [],
             "stateMutability": "nonpayable",
             "type": "function"
@@ -662,6 +558,25 @@
             "type": "function"
         },
         {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "name": "tokenValidTime",
+            "outputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "",
+                    "type": "uint256"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+        },
+        {
             "inputs": [],
             "name": "totalSupply",
             "outputs": [
@@ -708,6 +623,25 @@
             "name": "transferOwnership",
             "outputs": [],
             "stateMutability": "nonpayable",
+            "type": "function"
+        },
+        {
+            "inputs": [
+                {
+                    "internalType": "uint256",
+                    "name": "_tokenId",
+                    "type": "uint256"
+                }
+            ],
+            "name": "validToken",
+            "outputs": [
+                {
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
+                }
+            ],
+            "stateMutability": "view",
             "type": "function"
         },
         {

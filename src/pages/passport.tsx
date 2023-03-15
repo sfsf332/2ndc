@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next';
-import MintSndcNFT from '../mintSndcNFT.json';
+import FamsNFT from '../famsNft.json';
 import GenesisNFT from '../genesisNft.json';
 import FlipCard, { BackCard, FrontCard } from '../components/FlipCard';
 
@@ -27,9 +27,9 @@ export default function Passport() {
     const [connected, setConnected] = React.useState(false);
     const { isConnected, address } = useAccount();
     const { config: configGenesisMint } = usePrepareContractWrite({
-        address: '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40',
-        abi: MintSndcNFT.abi,
-        functionName: 'genesisMint',
+        address: '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329',
+        abi: GenesisNFT.abi,
+        functionName: 'mint',
         args: [],
         overrides: {
             value: ethers.utils.parseEther('0.4'),
@@ -37,9 +37,9 @@ export default function Passport() {
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
-        address: '0xB99f77343A870BF23D391501EEc999efca52Fbf4',
-        abi: MintSndcNFT.abi,
-        functionName: 'famsMint',
+        address: '0xaF7ebB7038e90ce951769B69f5F24B7Ef0DcBC9B',
+        abi: FamsNFT.abi,
+        functionName: 'mint',
         args: [],
         overrides: {
             value: ethers.utils.parseEther('0.25'),
@@ -84,24 +84,25 @@ export default function Passport() {
     } = useContractWrite(configFamsMint)
 
     const { data: genesisMintInfo }: any = useContractRead({
-        address: '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40',
+        address: '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329',
         abi: GenesisNFT.abi,
         functionName: 'totalSupply',
         watch: true,
     } as UseContractReadConfig);
     const { data: genesisMinted }: any = useContractRead({
-        address: '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40',
+        address: '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329',
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
     const { data: famsMinted }: any = useContractRead({
-        address: '0xB99f77343A870BF23D391501EEc999efca52Fbf4',
-        abi: GenesisNFT.abi,
+        address: '0xaF7ebB7038e90ce951769B69f5F24B7Ef0DcBC9B',
+        abi: FamsNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
-    // console.log(famsMinted)
+    console.log(famsMinted,genesisMinted,genesisMintInfo)
+
     const {
         data: gnData,
         isSuccess: gnSuccess,
@@ -122,6 +123,7 @@ export default function Passport() {
         setConnected(isConnected)
     }, [isConnected]);
     React.useEffect(() => {
+
         setSupply(genesisMintInfo?._hex * 1)
     }, [genesisMintInfo]);
 
@@ -169,7 +171,7 @@ export default function Passport() {
                                                 </ul>
                                                 <p className='flex justify-between mt-8'>
                                                     <span className='text-sm'>- {t('label_progress')}</span>
-                                                    <span>{99+supply}/321</span>
+                                                    <span>{supply}/321</span>
                                                 </p>
 
                                                 <button

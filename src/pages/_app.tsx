@@ -15,12 +15,13 @@ import {
   darkTheme
 } from '@rainbow-me/rainbowkit';
 import { argentWallet, trustWallet } from '@rainbow-me/rainbowkit/wallets';
-import { createClient, configureChains, WagmiConfig, mainnet } from 'wagmi';
+import { createClient, configureChains, WagmiConfig, mainnet ,goerli} from 'wagmi';
 import { Chain } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 
 const { chains, provider, webSocketProvider } = configureChains(
   [mainnet],
+  // [goerli],
   [publicProvider()]
 );
 console.log(chains)

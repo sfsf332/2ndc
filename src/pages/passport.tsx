@@ -36,7 +36,7 @@ export default function Passport() {
         overrides: {
             value: ethers.utils.parseEther('0.4'),
             gasLimit: BigNumber.from('500000'),
-            
+
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
@@ -49,9 +49,9 @@ export default function Passport() {
             gasLimit: BigNumber.from('500000'),
         },
     })
-    const mintGenesis = async() => {
-        
-        if(!genesisOpen) {
+    const mintGenesis = async () => {
+
+        if (!genesisOpen) {
             toast.error('Mint not open.')
             return
         }
@@ -67,7 +67,7 @@ export default function Passport() {
         genesisMint?.()
     }
     const mintFams = async () => {
-        if(!famsOpen) {
+        if (!famsOpen) {
             toast.error('Mint not open.')
             return
         }
@@ -105,7 +105,7 @@ export default function Passport() {
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
-    
+
     const { data: genesisOpen }: any = useContractRead({
         address: GenesisNFTAddress,
         abi: GenesisNFT.abi,
@@ -233,7 +233,7 @@ export default function Passport() {
                                                     target={'_blank'}
                                                     className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
                                                     href={`https://etherscan.io/tx/${genesisData?.hash}`}>
-                                                        
+                                                    Etherscan
                                                 </a>
                                                 <a
                                                     target={'_blank'}
@@ -328,7 +328,7 @@ export default function Passport() {
                                                     href={`https://etherscan.io/tx/${famsData?.hash}`}>
                                                     Etherscan
                                                 </a>
-                                                
+
                                             </div>
                                         </div>
                                     </BackCard>
@@ -374,7 +374,7 @@ export default function Passport() {
                         </h1>
                         <div className='my-16'>
                             <Web3ConnectButton />
-                           
+
                         </div>
                     </div>
                 )}

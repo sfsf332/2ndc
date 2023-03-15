@@ -19,35 +19,42 @@ import { BigNumber, ethers } from 'ethers';
 import ReactLoading from 'react-loading';
 import router from 'next/router';
 import { Web3ConnectButton } from '@/components/Web3ConnectButton';
-
+const GenesisNFTAddress = '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329';
+const FamsNFTAddress = '0xaF7ebB7038e90ce951769B69f5F24B7Ef0DcBC9B';
+// const GenesisNFTAddress = '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40';
+// const FamsNFTAddress = '0xB99f77343A870BF23D391501EEc999efca52Fbf4';
 export default function Passport() {
     const { t } = useTranslation();
-    const [minted, setMinted] = React.useState(false);
     const [supply, setSupply] = React.useState(0);
     const [connected, setConnected] = React.useState(false);
     const { isConnected, address } = useAccount();
     const { config: configGenesisMint } = usePrepareContractWrite({
-        address: '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329',
+        address: GenesisNFTAddress,
         abi: GenesisNFT.abi,
         functionName: 'mint',
         args: [],
         overrides: {
             value: ethers.utils.parseEther('0.4'),
-            gasLimit: BigNumber.from('300000'),
+            gasLimit: BigNumber.from('500000'),
+            
         },
     })
     const { config: configFamsMint } = usePrepareContractWrite({
-        address: '0xaF7ebB7038e90ce951769B69f5F24B7Ef0DcBC9B',
+        address: FamsNFTAddress,
         abi: FamsNFT.abi,
         functionName: 'mint',
         args: [],
         overrides: {
             value: ethers.utils.parseEther('0.25'),
-            gasLimit: BigNumber.from('300000'),
+            gasLimit: BigNumber.from('500000'),
         },
     })
-    const mintGenesis = () => {
-
+    const mintGenesis = async() => {
+        
+        if(!genesisOpen) {
+            toast.error('Mint not open.')
+            return
+        }
         if (supply >= 321) {
             toast.error('Out of supply')
             return
@@ -60,7 +67,10 @@ export default function Passport() {
         genesisMint?.()
     }
     const mintFams = async () => {
-
+        if(!famsOpen) {
+            toast.error('Mint not open.')
+            return
+        }
         if (famsMinted?._hex * 1 > 0) {
             toast.error('You have already minted a Fams NFT')
             return
@@ -84,25 +94,36 @@ export default function Passport() {
     } = useContractWrite(configFamsMint)
 
     const { data: genesisMintInfo }: any = useContractRead({
-        address: '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329',
+        address: GenesisNFTAddress,
         abi: GenesisNFT.abi,
         functionName: 'totalSupply',
         watch: true,
     } as UseContractReadConfig);
     const { data: genesisMinted }: any = useContractRead({
-        address: '0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329',
+        address: GenesisNFTAddress,
         abi: GenesisNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
+    
+    const { data: genesisOpen }: any = useContractRead({
+        address: GenesisNFTAddress,
+        abi: GenesisNFT.abi,
+        functionName: 'open',
+    } as UseContractReadConfig);
+    console.log(genesisOpen)
+
     const { data: famsMinted }: any = useContractRead({
-        address: '0xaF7ebB7038e90ce951769B69f5F24B7Ef0DcBC9B',
+        address: FamsNFTAddress,
         abi: FamsNFT.abi,
         functionName: 'numberMinted',
         args: [address],
     } as UseContractReadConfig);
-    console.log(famsMinted,genesisMinted,genesisMintInfo)
-
+    const { data: famsOpen }: any = useContractRead({
+        address: FamsNFTAddress,
+        abi: GenesisNFT.abi,
+        functionName: 'open',
+    } as UseContractReadConfig);
     const {
         data: gnData,
         isSuccess: gnSuccess,
@@ -212,12 +233,12 @@ export default function Passport() {
                                                     target={'_blank'}
                                                     className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
                                                     href={`https://etherscan.io/tx/${genesisData?.hash}`}>
-                                                    Etherscan
+                                                        
                                                 </a>
                                                 <a
                                                     target={'_blank'}
                                                     className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                    href={`https://opensea.io/assets/0x805D50aeA0782C809F8DCCf98af18100D8C4FF28/${supply-1}`}
+                                                    href={`https://opensea.io/collection/second-class-genesis`}
                                                 >
                                                     Opensea
                                                 </a>
@@ -300,20 +321,14 @@ export default function Passport() {
                                                 autoPlay={true}
                                                 muted
                                             ></video>
-                                            <div className='flex justify-between  divide-x'>
+                                            <div className='flex justify-between '>
                                                 <a
                                                     target={'_blank'}
-                                                    className="py-2 w-1/2  bg-white text-black text-center rounded-tl-full  rounded-bl-full"
+                                                    className="py-2 w-full  bg-white text-black text-center rounded-full"
                                                     href={`https://etherscan.io/tx/${famsData?.hash}`}>
                                                     Etherscan
                                                 </a>
-                                                <a
-                                                    target={'_blank'}
-                                                    className="py-2  w-1/2  bg-white text-black text-center rounded-tr-full  rounded-br-full"
-                                                    href={`https://opensea.io/assets/0x8674210a9853ed9cf8357d7f21a10999f8282189/${supply-1}`}
-                                                >
-                                                    Opensea
-                                                </a>
+                                                
                                             </div>
                                         </div>
                                     </BackCard>

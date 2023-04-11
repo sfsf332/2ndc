@@ -144,7 +144,7 @@ export default function Home() {
   }
   return (
     <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  relative">
-      <div className=' w-full absolute top-0 left-0 min-h-screen z-999'>
+      {/* <div className=' w-full absolute top-0 left-0 min-h-screen z-999'>
         <div className="w-[1280px] h-full mx-auto mt-[8%]">
           <div className=" w-[480px] mx-0 bg-[rgba(21,21,21,1)]  md:py-10  md:px-10 rounded-2xl  text-base ">
             <h1>{t('index_title')}</h1>
@@ -161,7 +161,7 @@ export default function Home() {
 
           </div>
         </div>
-      </div>
+      </div> */}
       <div className=" w-full absolute z-0 top-0 left-0 h-full pointer-events-none" id="canvas"></div>
     </div>
   )

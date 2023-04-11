@@ -34,7 +34,7 @@ export default function Passport() {
         functionName: 'mint',
         args: [],
         overrides: {
-            value: ethers.utils.parseEther('0.4'),
+            value: ethers.utils.parseEther('1'),
             gasLimit: BigNumber.from('500000'),
 
         },
@@ -201,7 +201,7 @@ export default function Passport() {
                                                 >
                                                     <span className='text-red mr-2'>-</span>
                                                     <span>
-                                                        0.4E
+                                                        1E
                                                     </span>
                                                     <span className='text-red  ml-2'>  -</span>
                                                 </button>

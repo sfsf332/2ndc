@@ -26,7 +26,7 @@ export default function Social() {
                                 </h2>
 
                                 <button className="py-2 mx-auto bg-white flex justify-between px-8  text-black rounded-full">
-                                    <a href="https://discord.gg/CguVuCTTG4" target="_blank" className='hover:text-red'>Join Discord</a>
+                                    <a href="https://discord.com/invite/qxgUY2B5Wd" target="_blank" className='hover:text-red'>Join Discord</a>
                                 </button>
                             </div>
 

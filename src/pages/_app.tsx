@@ -24,7 +24,6 @@ const { chains, provider, webSocketProvider } = configureChains(
   // [goerli],
   [publicProvider()]
 );
-console.log(chains)
 const { wallets } = getDefaultWallets({
   appName: '2NDC',
   chains,

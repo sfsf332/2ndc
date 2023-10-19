@@ -62,7 +62,7 @@ export default function Passport() {
       });
       setGasFams(gasfam.toNumber() + 20000);
     } catch (error:any) {
-      toast.error('交易预估失败：'+ error.error.error.message);
+      toast.error( error.error.error.message);
     }
   };
   const mintGenFun = async function () {
@@ -74,7 +74,7 @@ export default function Passport() {
       setGasGens(gasGen.toNumber() + 20000);
     } catch (error:any) {
       //@ts-ignore
-      toast.error('交易预估失败：'+ error.error.error.message);
+      toast.error( error.error.error.message);
 
     
     }

@@ -16,7 +16,7 @@ import {
 } from "wagmi";
 import { prepareWriteContract } from "@wagmi/core";
 
-import React from "react";
+import React, { useRef } from "react";
 import { BigNumber, ethers } from "ethers";
 import ReactLoading from "react-loading";
 import router from "next/router";
@@ -45,30 +45,40 @@ export default function Passport() {
     provider
   );
 
-  const [gasFam, setGasFam] = React.useState<Number>(21000);
-  const [gasGen, setGasGen] = React.useState<Number>(21000);
+  // const [gasFam, setGasFam] = React.useState<Number>(21000);
+  const [gasFams, setGasFams] = React.useState<Number>(21000);
+
+  const [gasGens, setGasGens] = React.useState<Number>(21000);
   const { t } = useTranslation();
   const [supply, setSupply] = React.useState(0);
   const [connected, setConnected] = React.useState(false);
   const { isConnected, address } = useAccount();
 
   const mintFamsFun = async function () {
-    const gasfam = await Fmint.estimateGas.mint({
-      from: address,
-      value: ethers.utils.parseEther("0.25"),
-    });
-    setGasFam(gasfam.toNumber() + 20000);
-    famsMint?.();
+    try {
+      const gasfam = await Fmint.estimateGas.mint({
+        from: address,
+        value: ethers.utils.parseEther("0.25"),
+      });
+      setGasFams(gasfam.toNumber() + 20000);
+    } catch (error:any) {
+      toast.error('交易预估失败：'+ error.error.error.message);
+    }
   };
   const mintGenFun = async function () {
-    const gasGen = await Gmint.estimateGas.mint({
-      from: address,
-      value: ethers.utils.parseEther("1"),
-    });
-    setGasGen(gasGen.toNumber() + 20000);
-    genesisMint?.();
-  };
+    try {
+      const gasGen = await Gmint.estimateGas.mint({
+        from: address,
+        value: ethers.utils.parseEther("1"),
+      });
+      setGasGens(gasGen.toNumber() + 20000);
+    } catch (error:any) {
+      //@ts-ignore
+      toast.error('交易预估失败：'+ error.error.error.message);
 
+    
+    }
+  };
   const { config: configGenesisMint } = usePrepareContractWrite({
     address: GenesisNFTAddress,
     abi: GenesisNFT.abi,
@@ -76,19 +86,20 @@ export default function Passport() {
     args: [],
     overrides: {
       value: ethers.utils.parseEther("1"),
-      gasLimit: BigNumber.from(gasGen),
+      gasLimit: BigNumber.from(gasGens),
     },
   });
-  const { config: configFamsMint } = usePrepareContractWrite({
-    address: FamsNFTAddress,
-    abi: FamsNFT.abi,
-    functionName: "mint",
-    args: [],
-    overrides: {
-      value: ethers.utils.parseEther("0.25"),
-      gasLimit: BigNumber.from(gasFam),
-    },
-  });
+  const { config: configFamsMint, refetch: gasFamRest } =
+    usePrepareContractWrite({
+      address: FamsNFTAddress,
+      abi: FamsNFT.abi,
+      functionName: "mint",
+      args: [],
+      overrides: {
+        value: ethers.utils.parseEther("0.25"),
+        gasLimit: BigNumber.from(gasFams),
+      },
+    });
   const mintGenesis = async () => {
     if (!genesisOpen) {
       toast.error("Mint not open.");
@@ -123,6 +134,7 @@ export default function Passport() {
     isSuccess: genesisSuccess,
     error: genesisError,
     write: genesisMint,
+    reset: genesisUpdate,
   } = useContractWrite(configGenesisMint);
   const {
     data: famsData,
@@ -130,6 +142,7 @@ export default function Passport() {
     isSuccess: famsSuccess,
     error: famsError,
     write: famsMint,
+    reset: famsUpdate,
   } = useContractWrite(configFamsMint);
 
   const { data: genesisMintInfo }: any = useContractRead({
@@ -184,7 +197,18 @@ export default function Passport() {
   React.useEffect(() => {
     setSupply(genesisMintInfo?._hex * 1);
   }, [genesisMintInfo]);
-
+  React.useEffect(() => {
+    if (gasFams !== 21000) {
+      famsUpdate();
+      famsMint?.();
+    }
+  }, [gasFams]);
+  React.useEffect(() => {
+    if (gasGens !== 21000) {
+      genesisUpdate();
+      genesisMint?.();
+    }
+  }, [gasGens]);
   return (
     <div className="max-w-full w-full mx-auto md:flex-row min-h-screen  ">
       <div className=" w-full min-h-screen mx-auto">

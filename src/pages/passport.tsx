@@ -14,6 +14,7 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from "wagmi";
+import { prepareWriteContract } from "@wagmi/core";
 
 import React from "react";
 import { BigNumber, ethers } from "ethers";
@@ -22,23 +23,52 @@ import router from "next/router";
 import { Web3ConnectButton } from "@/components/Web3ConnectButton";
 import { parseEther } from "ethers/lib/utils.js";
 const GenesisNFTAddress = "0x21D4B6F00C8b4026AC692276DDeA3d720c8cF329";
-const FamsNFTAddress = "0xaF7ebB7038e90ce951769B69f5F24B7Ef0DcBC9B";
+const FamsNFTAddress = "0x9420c362682868E1921A10794fe55aEAAD2A5B93";
 // const GenesisNFTAddress = '0x6810C884c95c1De5C1C79b1a001DC730CCe22e40';
 // const FamsNFTAddress = '0xB99f77343A870BF23D391501EEc999efca52Fbf4';
-const settings = {
-  apiKey: "HyL-ZQJvN-EVa3sgbE3Q1MPXlvjSdfiY", // Replace with your Alchemy API Key.
-  network: Network.ETH_MAINNET, // Replace with your network.
-};
-const alchemy = new Alchemy(settings);
-export default function Passport() {
+// const settings = {
+//   apiKey: "HyL-ZQJvN-EVa3sgbE3Q1MPXlvjSdfiY", // Replace with your Alchemy API Key.
+//   network: Network.ETH_MAINNET, // Replace with your network.
+// };
+// const alchemy = new Alchemy(settings);
 
-  const web3 = createAlchemyWeb3(
-    `https://eth-mainnet.g.alchemy.com/v2/HyL-ZQJvN-EVa3sgbE3Q1MPXlvjSdfiY`,);
-  const [gasFee, setGasFee] = React.useState<Number>(50000);
+export default function Passport() {
+  const provider = new ethers.providers.AlchemyProvider(
+    "homestead",
+    "HyL-ZQJvN-EVa3sgbE3Q1MPXlvjSdfiY"
+  );
+
+  const Fmint = new ethers.Contract(FamsNFTAddress, FamsNFT.abi, provider);
+  const Gmint = new ethers.Contract(
+    GenesisNFTAddress,
+    GenesisNFT.abi,
+    provider
+  );
+
+  const [gasFam, setGasFam] = React.useState<Number>(21000);
+  const [gasGen, setGasGen] = React.useState<Number>(21000);
   const { t } = useTranslation();
   const [supply, setSupply] = React.useState(0);
   const [connected, setConnected] = React.useState(false);
   const { isConnected, address } = useAccount();
+
+  const mintFamsFun = async function () {
+    const gasfam = await Fmint.estimateGas.mint({
+      from: address,
+      value: ethers.utils.parseEther("0.25"),
+    });
+    setGasFam(gasfam.toNumber() + 20000);
+    famsMint?.();
+  };
+  const mintGenFun = async function () {
+    const gasGen = await Gmint.estimateGas.mint({
+      from: address,
+      value: ethers.utils.parseEther("1"),
+    });
+    setGasGen(gasGen.toNumber() + 20000);
+    genesisMint?.();
+  };
+
   const { config: configGenesisMint } = usePrepareContractWrite({
     address: GenesisNFTAddress,
     abi: GenesisNFT.abi,
@@ -46,7 +76,7 @@ export default function Passport() {
     args: [],
     overrides: {
       value: ethers.utils.parseEther("1"),
-      gasLimit: BigNumber.from(gasFee),
+      gasLimit: BigNumber.from(gasGen),
     },
   });
   const { config: configFamsMint } = usePrepareContractWrite({
@@ -56,7 +86,7 @@ export default function Passport() {
     args: [],
     overrides: {
       value: ethers.utils.parseEther("0.25"),
-      gasLimit:  BigNumber.from(gasFee),
+      gasLimit: BigNumber.from(gasFam),
     },
   });
   const mintGenesis = async () => {
@@ -73,7 +103,7 @@ export default function Passport() {
       toast.error("You have already minted a Genesis NFT");
       return;
     }
-    genesisMint?.();
+    mintGenFun();
   };
   const mintFams = async () => {
     if (!famsOpen) {
@@ -84,7 +114,7 @@ export default function Passport() {
       toast.error("You have already minted a Fams NFT");
       return;
     }
-    famsMint?.();
+    mintFamsFun();
   };
 
   const {
@@ -147,35 +177,12 @@ export default function Passport() {
   } = useWaitForTransaction({
     hash: famsData?.hash,
   });
-  const getGasPrice = async () => {
-    // const estGas = await providerETH.estimateGas({
-    //   to: GenesisNFTAddress,
-    //   data: "0xa9059c",
-    //   value: parseEther("1.0"),
-    // });
-    const estGas = await web3.eth.estimateGas({
-      from: address,
-      to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-    }) 
-    console.log(estGas)
-    setGasFee(estGas+20000)
 
-  //  alchemy.core
-  //   .estimateGas({
-  //     to: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-     
-  //     value: parseEther("1.0"),
-  //   })
-  //   .then(res=>{console.log(res)});
-    // console.log(estGas);
-    // setGasFee(gasPrice)
-  };
   React.useEffect(() => {
     setConnected(isConnected);
   }, [isConnected]);
   React.useEffect(() => {
     setSupply(genesisMintInfo?._hex * 1);
-    getGasPrice()
   }, [genesisMintInfo]);
 
   return (
